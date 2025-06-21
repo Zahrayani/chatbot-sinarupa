@@ -1,0 +1,58 @@
+.disclaimer-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #fef9e7, #f9ebf2);
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.disclaimer-title {
+  text-align: center;
+  color: #5e1b92;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.disclaimer-greeting {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.disclaimer-list {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  color: #5a0f75;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.disclaimer-button {
+  display: block;
+  margin: 0 auto;
+  background-color: #7e2dd2;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.disclaimer-button:hover {
+  background-color: #5e1b92;
+}
+
+button {
+  z-index: 10;
+  position: relative;
+}

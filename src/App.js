@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import ChatBox from "./components/ChatBox";
+import Disclaimer from "./components/Disclaimer";
+import Loading from "./components/Loading";
 
 function App() {
+  const [showLoading, setShowLoading] = useState(true);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+
+  // Deteksi perangkat untuk menampilkan video mobile atau desktop
+  const isMobile = /iPhone|Android/i.test(navigator.userAgent);
+
+  const handleFinishLoading = () => {
+    setShowLoading(false);
+    setShowDisclaimer(true);
+  };
+
+  const handleAcceptDisclaimer = () => {
+    setShowDisclaimer(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {showLoading ? (
+        <Loading onFinish={handleFinishLoading} isMobile={isMobile} />
+      ) : showDisclaimer ? (
+        <Disclaimer onContinue={handleAcceptDisclaimer} />
+      ) : (
+        <ChatBox />
+      )}
+    </>
   );
 }
 
