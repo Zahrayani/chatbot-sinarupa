@@ -9,11 +9,19 @@ const ChatBox = () => {
   const [quickReplies, setQuickReplies] = useState([]);
   const [botResponses, setBotResponses] = useState({});
   const [isTyping, setIsTyping] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
 
   useEffect(() => {
     setQuickReplies(jsonData.quickReplies);
     setBotResponses(jsonData.botResponses);
   }, []);
+
+  const handleSend = () => {
+    if (selectedQuestion) {
+      sendMessage(selectedQuestion);
+      setSelectedQuestion(null);
+    }
+  };
 
   const sendMessage = async (userText) => {
     if (!userText) return;
@@ -45,7 +53,7 @@ const ChatBox = () => {
         const data = await res.json();
         const aiReply =
           data.candidates?.[0]?.content?.parts?.[0]?.text ||
-          "Maaf, Tompa belum memiliki jawaban untuk itu, tapi kamu bisa menghubungi instagram @sinarupa2025 untuk informasi lebih lanjut ya.";
+          "Maaf, Tompa belum memiliki jawaban untuk itu. Kamu bisa hubungi IG @sinarupa2025 ya!";
         setMessages((prev) => [...prev, { role: "bot", content: aiReply }]);
       } catch (err) {
         console.error("❌ Error:", err);
@@ -54,7 +62,7 @@ const ChatBox = () => {
           {
             role: "bot",
             content:
-              "Maaf, Tompa mengalami kendala teknis. Silakan coba lagi nanti atau hubungi instagram @sinarupa2025.",
+              "Tompa lagi error nih. Coba tanya lagi nanti ya, atau langsung kontak panitia di IG @sinarupa2025.",
           },
         ]);
       } finally {
@@ -65,30 +73,47 @@ const ChatBox = () => {
 
   return (
     <div className="chat-wrapper">
-      <div className="chat-title">TOMPA</div>
+      {/* HEADER */}
+      <div className="chat-header">
+        <img
+          src="/assets/profile-tompa.png"
+          alt="Tompa Logo"
+          className="tompa-logo"
+        />
+        <span className="tompa-title">TOMPA</span>
+      </div>
 
+      {/* CHAT BOX */}
       <div className="chat-box">
         {messages.map((msg, i) => (
           <div key={i} className={`message ${msg.role}`}>
             {msg.content}
           </div>
         ))}
-        {isTyping && (
-          <div className="typing">Tompa sedang mengetik...</div>
-        )}
+        {isTyping && <div className="typing">Tompa sedang mengetik...</div>}
       </div>
 
+      {/* QUICK REPLIES */}
       <div className="quick-replies">
         {quickReplies.map((text, i) => (
           <button
             key={i}
-            onClick={() => sendMessage(text)}
+            onClick={() => setSelectedQuestion(text)}
             disabled={isTyping}
-            className="reply-btn"
+            className={`reply-btn ${selectedQuestion === text ? 'selected' : ''}`}
           >
             {text}
           </button>
         ))}
+      </div>
+      <div className="chat-input-area">
+        <button
+          onClick={handleSend}
+          className="kirim-btn"
+          disabled={isTyping || !selectedQuestion}
+        >
+          <img src="/assets/button-kirim.png" alt="Kirim" />
+        </button>
       </div>
     </div>
   );
